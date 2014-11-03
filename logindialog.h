@@ -15,6 +15,9 @@ public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
 
+private slots:
+    void on_urllabel_linkActivated(const QString &link);
+
 private:
     Ui::LoginDialog *ui;
 };

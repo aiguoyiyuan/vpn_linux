@@ -1,5 +1,7 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
+#include <QUrl>
+#include <QDesktopServices>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -11,4 +13,9 @@ LoginDialog::LoginDialog(QWidget *parent) :
 LoginDialog::~LoginDialog()
 {
     delete ui;
+}
+
+void LoginDialog::on_urllabel_linkActivated(const QString &link)
+{
+    QDesktopServices::openUrl(QUrl("https://www.grjsq.im/component/user/?task=register"));
 }

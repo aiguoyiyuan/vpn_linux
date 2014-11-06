@@ -18,8 +18,8 @@ File::~File() {
 int File::gets(string &line) {
     if (_handle == NULL)
         return -1;
-    char buf[4096]
-    char *s = fgets(buf, 4096-1, _handle);
+    char buf[4096];
+    char *s = fgets(buf, 4096-1, _handle);//file end ?
     if (s == NULL) {
         return errno;
     }

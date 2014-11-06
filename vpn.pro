@@ -13,8 +13,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        logindialog.cpp
+        logindialog.cpp \
+    listdialog.cpp \
+    file.cpp \
+    linelist.cpp
 
-HEADERS  += logindialog.h
+HEADERS  += logindialog.h \
+    listdialog.h \
+    file.hpp \
+    linelist.hpp
 
-FORMS    += logindialog.ui
+FORMS    += logindialog.ui \
+    listdialog.ui
+
+OTHER_FILES += \
+    list.ini

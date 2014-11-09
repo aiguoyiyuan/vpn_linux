@@ -2,6 +2,8 @@
 #define LISTDIALOG_H
 
 #include <QDialog>
+#include "define.h"
+#include "linelist.hpp"
 
 namespace Ui {
 class ListDialog;
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::ListDialog *ui;
+    base::LineList _linelist;
 };
 
 #endif // LISTDIALOG_H

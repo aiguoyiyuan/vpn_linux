@@ -21,7 +21,8 @@ SOURCES += main.cpp\
 HEADERS  += logindialog.h \
     listdialog.h \
     file.hpp \
-    linelist.hpp
+    linelist.hpp \
+    define.h
 
 FORMS    += logindialog.ui \
     listdialog.ui

@@ -11,7 +11,7 @@ private:
     FILE *_handle;
 
 public:
-    File(char *fn, const char *mode);
+    File(const char *fn, const char *mode);
     ~File();
     int gets(std::string &line);
     int puts(const std::string &line);

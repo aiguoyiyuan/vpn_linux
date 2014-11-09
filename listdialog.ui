@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
+    <width>548</width>
     <height>397</height>
    </rect>
   </property>
@@ -47,6 +47,21 @@
       <property name="text">
        <string>试用线路</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">areaGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -54,6 +69,15 @@
       <property name="text">
        <string>VIP北美</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">areaGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -61,6 +85,15 @@
       <property name="text">
        <string>VIP欧洲</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">areaGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -68,6 +101,15 @@
       <property name="text">
        <string>VIP亚洲A区</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">areaGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -75,6 +117,15 @@
       <property name="text">
        <string>VIP亚洲B区</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">areaGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -98,6 +149,15 @@
       <property name="text">
        <string>海外加速</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">rangeGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -105,6 +165,21 @@
       <property name="text">
        <string>全局加速</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">rangeGroup</string>
+      </attribute>
      </widget>
     </item>
    </layout>
@@ -217,6 +292,9 @@
    <property name="text">
     <string>连接</string>
    </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
@@ -236,15 +314,20 @@
     <string>断开</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableWidget" name="lineWidget">
    <property name="geometry">
     <rect>
      <x>130</x>
      <y>10</y>
-     <width>401</width>
-     <height>191</height>
+     <width>405</width>
+     <height>192</height>
     </rect>
    </property>
+   <property name="columnCount">
+    <number>2</number>
+   </property>
+   <column/>
+   <column/>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -275,4 +358,8 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="areaGroup"/>
+  <buttongroup name="rangeGroup"/>
+ </buttongroups>
 </ui>

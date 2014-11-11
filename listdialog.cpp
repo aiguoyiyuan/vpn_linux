@@ -26,7 +26,7 @@ ListDialog::ListDialog(QWidget *parent) :
     ui->lineWidget->setHorizontalHeaderLabels(widgetHeader);
 
     ui->lineWidget->setRowCount(5);
-    QTableWidgetItem *item = new QTableWidgetItem(QString("192.168.1.1"));
+    //QTableWidgetItem *item = new QTableWidgetItem(QString("192.168.1.1"));
     ui->lineWidget->setItem(0, 0, new QTableWidgetItem(QString("192.168.1.1")));
     ui->lineWidget->setItem(1, 0, new QTableWidgetItem(QString("192.168.1.2")));
     //ui->lineWidget->setItem(2, 0, item);

@@ -18,6 +18,10 @@ public:
     ~ListDialog();
 
 private:
+    void initTable();
+    void setTableContent();
+
+private:
     Ui::ListDialog *ui;
     base::LineList _linelist;
 };

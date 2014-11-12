@@ -327,8 +327,9 @@
     <set>QAbstractItemView::NoEditTriggers</set>
    </property>
    <property name="columnCount">
-    <number>2</number>
+    <number>3</number>
    </property>
+   <column/>
    <column/>
    <column/>
   </widget>
@@ -362,7 +363,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="rangeGroup"/>
   <buttongroup name="areaGroup"/>
+  <buttongroup name="rangeGroup"/>
  </buttongroups>
 </ui>

@@ -1,6 +1,9 @@
 #include "listdialog.h"
 #include "ui_listdialog.h"
 
+using namespace base;
+using namespace std;
+
 ListDialog::ListDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ListDialog)
@@ -13,31 +16,40 @@ ListDialog::ListDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->width(), this->height());
 
-    QStringList widgetHeader;
-    widgetHeader << "服务器" << "响应时间";
-    ui->lineWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-    int width = ui->lineWidget->width();
-    if (SERVER_WIDGET < width-100) {
-        ui->lineWidget->setColumnWidth(0, SERVER_WIDGET);
-    } else {
-        ui->lineWidget->setColumnWidth(0, width-100);
-    }
-    ui->lineWidget->horizontalHeader()->setStretchLastSection(true);
-    ui->lineWidget->setHorizontalHeaderLabels(widgetHeader);
-
-    ui->lineWidget->setRowCount(5);
-    //QTableWidgetItem *item = new QTableWidgetItem(QString("192.168.1.1"));
-    ui->lineWidget->setItem(0, 0, new QTableWidgetItem(QString("192.168.1.1")));
-    ui->lineWidget->setItem(1, 0, new QTableWidgetItem(QString("192.168.1.2")));
+    initTable();
+    setTableContent();
     //ui->lineWidget->setItem(2, 0, item);
     //ui->lineWidget->setItem(3, 0, item);
+}
 
-    //QPushButton *areaButton = qobject_cast<QPushButton *> (ui->areaGroup->checkedButton());
-    //if (QString::compare((areaButton->objectName(), QString("testButton")))) {
+void ListDialog::initTable()
+{
+    QStringList widgetHeader;
+    widgetHeader << "服务器" << "协议" << "响应时间";
+    ui->lineWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
+    int width = ui->lineWidget->width();
+    ui->lineWidget->setColumnWidth(0, SERVER_WIDGET);
+    ui->lineWidget->setColumnWidth(1, PROTOCOL_WIDGET);
+    ui->lineWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->lineWidget->setHorizontalHeaderLabels(widgetHeader);
+    ui->lineWidget->verticalHeader()->setVisible(false);
+    ui->lineWidget->setEditTriggers(QTableWidget::NoEditTriggers);
+    ui->lineWidget->setSelectionBehavior(QTableWidget::SelectRows);
+    ui->lineWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+}
 
-    //}
-
-
+void ListDialog::setTableContent()
+{
+    QPushButton *areaButton = qobject_cast<QPushButton *> (ui->areaGroup->checkedButton());
+    QString objn = areaButton->objectName();
+    if (objn.compare(QString("testButton")) == 0) {
+        vector<LineItem> lines = _linelist.getLineByArea("free");
+        ui->lineWidget->setRowCount(lines.size());
+        for (size_t i = 0;i < lines.size(); i++) {
+            ui->lineWidget->setItem(i, 0, new QTableWidgetItem(QString(lines[i].getName().c_str())));
+            ui->lineWidget->setItem(i, 1, new QTableWidgetItem(QString(lines[i].getProtocols().c_str())));
+        }
+    }
 }
 
 ListDialog::~ListDialog()

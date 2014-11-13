@@ -37,19 +37,20 @@ void ListDialog::initTable()
 
 void ListDialog::setTableContent()
 {
+    ui->lineWidget->clearContents();
     QPushButton *areaButton = qobject_cast<QPushButton *> (ui->areaGroup->checkedButton());
     QString objn = areaButton->objectName();
     vector<LineItem> lines;
     if (objn.compare(QString("testButton")) == 0) {
         lines = _linelist.getLineByArea("free");
     } else if (objn.compare(QString("nAmericaButton")) == 0) {
-        lines = _linelist.getLineByArea("free");
+        lines = _linelist.getLineByArea("northAmerican");
     } else if (objn.compare(QString("europeButton")) == 0) {
-        lines = _linelist.getLineByArea("free");
+        lines = _linelist.getLineByArea("europe");
     } else if (objn.compare(QString("asiaaButton")) == 0) {
-        lines = _linelist.getLineByArea("free");
+        lines = _linelist.getLineByArea("asiaA");
     } else if (objn.compare(QString("asiabButton")) == 0) {
-        lines = _linelist.getLineByArea("free");
+        lines = _linelist.getLineByArea("asiaB");
     }
     size_t rows = ROW_COUNT > lines.size() ? ROW_COUNT : lines.size();
     ui->lineWidget->setRowCount(rows);
@@ -67,4 +68,9 @@ void ListDialog::setTableContent()
 ListDialog::~ListDialog()
 {
     delete ui;
+}
+
+void ListDialog::on_areaGroup_buttonClicked(QAbstractButton * button)
+{
+    setTableContent();
 }

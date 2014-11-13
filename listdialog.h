@@ -2,6 +2,7 @@
 #define LISTDIALOG_H
 
 #include <QDialog>
+#include <QAbstractButton>
 #include "define.h"
 #include "linelist.hpp"
 
@@ -16,6 +17,9 @@ class ListDialog : public QDialog
 public:
     explicit ListDialog(QWidget *parent = 0);
     ~ListDialog();
+
+private slots:
+    void on_areaGroup_buttonClicked(QAbstractButton * button);
 
 private:
     void initTable();

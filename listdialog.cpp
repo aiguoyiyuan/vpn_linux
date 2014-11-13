@@ -18,8 +18,6 @@ ListDialog::ListDialog(QWidget *parent) :
 
     initTable();
     setTableContent();
-    //ui->lineWidget->setItem(2, 0, item);
-    //ui->lineWidget->setItem(3, 0, item);
 }
 
 void ListDialog::initTable()
@@ -27,7 +25,6 @@ void ListDialog::initTable()
     QStringList widgetHeader;
     widgetHeader << "服务器" << "协议" << "响应时间";
     ui->lineWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-    int width = ui->lineWidget->width();
     ui->lineWidget->setColumnWidth(0, SERVER_WIDGET);
     ui->lineWidget->setColumnWidth(1, PROTOCOL_WIDGET);
     ui->lineWidget->horizontalHeader()->setStretchLastSection(true);
@@ -42,13 +39,28 @@ void ListDialog::setTableContent()
 {
     QPushButton *areaButton = qobject_cast<QPushButton *> (ui->areaGroup->checkedButton());
     QString objn = areaButton->objectName();
+    vector<LineItem> lines;
     if (objn.compare(QString("testButton")) == 0) {
-        vector<LineItem> lines = _linelist.getLineByArea("free");
-        ui->lineWidget->setRowCount(lines.size());
-        for (size_t i = 0;i < lines.size(); i++) {
-            ui->lineWidget->setItem(i, 0, new QTableWidgetItem(QString(lines[i].getName().c_str())));
-            ui->lineWidget->setItem(i, 1, new QTableWidgetItem(QString(lines[i].getProtocols().c_str())));
-        }
+        lines = _linelist.getLineByArea("free");
+    } else if (objn.compare(QString("nAmericaButton")) == 0) {
+        lines = _linelist.getLineByArea("free");
+    } else if (objn.compare(QString("europeButton")) == 0) {
+        lines = _linelist.getLineByArea("free");
+    } else if (objn.compare(QString("asiaaButton")) == 0) {
+        lines = _linelist.getLineByArea("free");
+    } else if (objn.compare(QString("asiabButton")) == 0) {
+        lines = _linelist.getLineByArea("free");
+    }
+    size_t rows = ROW_COUNT > lines.size() ? ROW_COUNT : lines.size();
+    ui->lineWidget->setRowCount(rows);
+    size_t i = 0;
+    for (i = 0;i < lines.size(); i++) {
+        ui->lineWidget->setItem(i, 0, new QTableWidgetItem(QString(lines[i].getName().c_str())));
+        ui->lineWidget->setItem(i, 1, new QTableWidgetItem(QString(lines[i].getProtocols().c_str())));
+        ui->lineWidget->setRowHeight(i, ROW_HEIGHT);
+    }
+    for (; i < rows; i++) {
+        ui->lineWidget->setRowHeight(i, ROW_HEIGHT);
     }
 }
 

@@ -3,8 +3,11 @@
 
 #include <QDialog>
 #include <QAbstractButton>
+#include <QProcess>
 #include "define.h"
 #include "linelist.hpp"
+#include <string>
+#include <vector>
 
 namespace Ui {
 class ListDialog;
@@ -24,10 +27,16 @@ private slots:
 private:
     void initTable();
     void setTableContent();
+    void ping();
+private slots:
+    void pingStarted();
 
 private:
     Ui::ListDialog *ui;
     base::LineList _linelist;
+    QProcess *_process;
+    std::vector<base::LineItem> _lines;
+    size_t _currentPingLine;
 };
 
 #endif // LISTDIALOG_H

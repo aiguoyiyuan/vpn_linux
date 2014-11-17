@@ -16,13 +16,15 @@ SOURCES += main.cpp\
         logindialog.cpp \
     listdialog.cpp \
     file.cpp \
-    linelist.cpp
+    linelist.cpp \
+    pingproc.cpp
 
 HEADERS  += logindialog.h \
     listdialog.h \
     file.hpp \
     linelist.hpp \
-    define.h
+    define.h \
+    pingproc.h
 
 FORMS    += logindialog.ui \
     listdialog.ui

@@ -10,10 +10,11 @@ using namespace std;
 ListDialog::ListDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ListDialog),
-    _process(NULL),
-    _currentPingLine(0)
+    _pingproc(NULL),
+    _thread(NULL)
 {
-    _process =  new QProcess;
+    _pingproc =  new PingProc;
+    _thread = new QThread;
     int ret = 0;
     if ((ret = _linelist.initFromFile(LIST_INI)) != 0) {
         //show a warning
@@ -22,10 +23,12 @@ ListDialog::ListDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(this->width(), this->height());
 
-    //connect(_process, SIGNAL(readyReadStandardOutput()), this, SLOT(setPing()));
-    //connect(_process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(pingFinished(int,QProcess::ExitStatus)));
-    //connect(_process, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(statesChange(QProcess::ProcessState)));
-    connect(_process, SIGNAL(started()), this, SLOT(pingStarted()));
+    connect(this, SIGNAL(getping(QString , QString , int)), _pingproc, SLOT(getping(QString, QString, int)));
+    connect(_pingproc, SIGNAL(setping(QString,QString,int)), this, SLOT(setping(QString,QString,int)));
+
+    _pingproc->moveToThread(_thread);
+    _thread->start();
+
     initTable();
     setTableContent();
 }
@@ -47,9 +50,11 @@ void ListDialog::initTable()
 
 void ListDialog::setTableContent()
 {
-    ui->lineWidget->clearContents();
     QPushButton *areaButton = qobject_cast<QPushButton *> (ui->areaGroup->checkedButton());
     QString objn = areaButton->objectName();
+    _currentArea = objn;
+
+    ui->lineWidget->clearContents();  
 
     if (objn.compare(QString("testButton")) == 0) {
         _lines = _linelist.getLineByArea("free");
@@ -69,13 +74,14 @@ void ListDialog::setTableContent()
         ui->lineWidget->setItem(i, 0, new QTableWidgetItem(QString(_lines[i].getName().c_str())));
         ui->lineWidget->setItem(i, 1, new QTableWidgetItem(QString(_lines[i].getProtocols().c_str())));
         ui->lineWidget->setRowHeight(i, ROW_HEIGHT);
+        emit getping(objn, QString(_lines[i].getIp().c_str()), i);
     }
     for (; i < rows; i++) {
         ui->lineWidget->setRowHeight(i, ROW_HEIGHT);
     }
 
-    _currentPingLine = 0;
-    ping();
+    //emit getping(_lines);
+
 }
 
 ListDialog::~ListDialog()
@@ -88,50 +94,9 @@ void ListDialog::on_areaGroup_buttonClicked(QAbstractButton * button)
     setTableContent();
 }
 
-void ListDialog::ping()
+void ListDialog::setping(QString area, QString sec, int line)
 {
-    if (_currentPingLine < _lines.size()) {
-        string ip(_lines[_currentPingLine].getIp());
-        QString cmd("ping");
-        QStringList args;
-        args << ip.c_str() << PING_ARGS.c_str();
-        _process->start(cmd, args);
-    }
-}
-
-void ListDialog::pingStarted()
-{
-    bool ret = _process->waitForFinished(1000);
-    QString sec;
-    QString result;
-    int from, b, e;
-    if (ret == false) {
-        sec.setNum(200);
-        goto SET_PING;
-    } else {
-        result = QString::fromLocal8Bit(_process->readAllStandardOutput());
-        from = result.indexOf(QString("mdev"));
-        if (from == -1) {
-            sec.setNum(200);
-            goto SET_PING;
-        }
-        b = result.indexOf('/', from);
-        if (b == -1) {
-            sec.setNum(200);
-            goto SET_PING;
-        }
-        e = result.indexOf('/', b+1);
-        if (e == -1) {
-            sec.setNum(200);
-            goto SET_PING;
-        }
-        sec =  result.mid(b+1, e-b-1);
-    }
-SET_PING:
-    ui->lineWidget->setItem(_currentPingLine, 2, new QTableWidgetItem(sec + QString("ms")));
-
-    _currentPingLine++;
-    if (_currentPingLine < _lines.size()) {
-        ping();
+    if (_currentArea == area) {
+        ui->lineWidget->setItem(line, 2, new QTableWidgetItem(sec + QString("ms")));
     }
 }

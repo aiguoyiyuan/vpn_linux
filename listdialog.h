@@ -3,11 +3,12 @@
 
 #include <QDialog>
 #include <QAbstractButton>
-#include <QProcess>
+#include <QThread>
 #include "define.h"
 #include "linelist.hpp"
 #include <string>
 #include <vector>
+#include <pingproc.h>
 
 namespace Ui {
 class ListDialog;
@@ -27,16 +28,20 @@ private slots:
 private:
     void initTable();
     void setTableContent();
-    void ping();
-private slots:
-    void pingStarted();
+
+signals:
+    void getping(QString area, QString ip, int line);
+
+public slots:
+    void setping(QString area, QString sec, int line);
 
 private:
     Ui::ListDialog *ui;
     base::LineList _linelist;
-    QProcess *_process;
     std::vector<base::LineItem> _lines;
-    size_t _currentPingLine;
+    QString _currentArea;
+    PingProc *_pingproc;
+    QThread *_thread;
 };
 
 #endif // LISTDIALOG_H

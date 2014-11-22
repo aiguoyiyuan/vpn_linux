@@ -15,6 +15,7 @@ public:
     ~File();
     int gets(std::string &line);
     int puts(const std::string &line);
+    int readAll(std::string &buffer);
 };
 
 }

@@ -6,6 +6,9 @@
 //const std::string LIST_INI = "list.ini";
 //const std::string LIST_INI = "/home/zhangrz/github/vpn/list.ini";
 const std::string LIST_INI = "/home/spotted-deer/github/vpn_linux/list.ini";
+const std::string VPN_CONF = "/home/spotted-deer/github/vpn_linux/vpn.config";
+//const std::string VPN_CONF_PATH = "/etc/NetworkManager/system-connections/";
+const std::string VPN_CONF_PATH = "/tmp/";
 
 const int SERVER_WIDGET = 100;
 const int PROTOCOL_WIDGET = 200;

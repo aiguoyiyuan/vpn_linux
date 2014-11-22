@@ -10,6 +10,7 @@ namespace base
 class LineItem
 {
 private:
+    std::string _id;
     std::string _name;
     std::string _ip;
     //std::vector<std::string> _protocols;
@@ -18,9 +19,10 @@ private:
 
 public:
     LineItem();
-    LineItem(const std::string &name, const std::string &ip,
+    LineItem(const std::string &id, const std::string &name, const std::string &ip,
              //const std::vector<std::string> protocols, const std::string &area);
              const std::string &protocols, const std::string &area);
+    std::string getId();
     std::string getName();
     std::string getIp();
     //std::vector<std::string> getProtocols();

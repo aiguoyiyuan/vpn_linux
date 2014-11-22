@@ -4,11 +4,13 @@
 #include <QDialog>
 #include <QAbstractButton>
 #include <QThread>
+#include <QString>
 #include "define.h"
 #include "linelist.hpp"
 #include <string>
 #include <vector>
 #include <pingproc.h>
+#include <vpnproc.h>
 
 namespace Ui {
 class ListDialog;
@@ -24,6 +26,7 @@ public:
 
 private slots:
     void on_areaGroup_buttonClicked(QAbstractButton * button);
+    void on_pushButton_clicked();
 
 private:
     void initTable();
@@ -31,9 +34,11 @@ private:
 
 signals:
     void getping(QString area, QString ip, int line);
+    void startVPN(QString id, QString user, QString password, QString ip);
 
 public slots:
     void setping(QString area, QString sec, int line);
+    void setVPNInfo(bool state, QString message);
 
 private:
     Ui::ListDialog *ui;
@@ -42,6 +47,8 @@ private:
     QString _currentArea;
     PingProc *_pingproc;
     QThread *_thread;
+    VpnProc *_vpnproc;
+    QThread *_vpnThread;
 };
 
 #endif // LISTDIALOG_H

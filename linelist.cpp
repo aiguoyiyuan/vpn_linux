@@ -62,13 +62,17 @@ vector<string> splitString(const string &s, const char sp) {
 }
 
 //LineItem::LineItem(const string &name, const string &ip, const std::vector<string> protocols, const string &area) :
-LineItem::LineItem(const string &name, const string &ip, const string &protocols, const string &area) :
-    _name(name), _ip(ip), _protocols(protocols), _area(area)
+LineItem::LineItem(const string &id, const string &name, const string &ip, const string &protocols, const string &area) :
+    _id(id), _name(name), _ip(ip), _protocols(protocols), _area(area)
 {
 }
 
 LineItem::LineItem()
 {
+}
+
+string LineItem::getId() {
+    return _id;
 }
 
 string LineItem::getName() {
@@ -98,7 +102,7 @@ int LineList::initFromFile(const string &fn) {
     enum Status{NONE, SECTION, DATA};
     Status status=NONE;
 
-    string name, ip, area;
+    string id, name, ip, area;
     //vector<string> protocols;
     string protocols;
     int ret = 0;
@@ -136,12 +140,13 @@ int LineList::initFromFile(const string &fn) {
                 if (datas.size() != 2)
                     continue;
                 string key = trim(datas[0], " ");
-                if (key == "name") {
+                if (key == "id") {
+                    id = trim(datas[1], " \"");
+                } else if (key == "name") {
                     name = trim(datas[1], " \"");
                 } else if (key == "ip") {
                     ip = trim(datas[1], " \"");
                 } else if (key == "protocol") {
-                    //protocols = splitString(trim(datas[1], " \""), '+');
                     protocols = trim(datas[1], " \"");
                 } else if (key == "area") {
                     area = trim(datas[1], " \"");
@@ -152,7 +157,7 @@ int LineList::initFromFile(const string &fn) {
         if (status != DATA) {
             if (name.size() > 0 && ip.size() > 0 &&
                     protocols.size() > 0 && area.size() > 0) {
-                LineItem item(name, ip, protocols, area);
+                LineItem item(id, name, ip, protocols, area);
                 if (_list.find(area) != _list.end()) {
                     _list[area].push_back(item);
                 } else {
@@ -171,7 +176,7 @@ int LineList::initFromFile(const string &fn) {
     }
     if (status == DATA && name.size() > 0 && ip.size() > 0 &&
             protocols.size() > 0 && area.size() > 0) {
-        LineItem item(name, ip, protocols, area);
+        LineItem item(id, name, ip, protocols, area);
         if (_list.find(area) != _list.end()) {
             _list[area].push_back(item);
         } else {
